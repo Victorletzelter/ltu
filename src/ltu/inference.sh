@@ -11,48 +11,48 @@ DOWNLOAD_URL_VICUNA="https://www.dropbox.com/scl/fo/mjn5wdnc1j67kkhbu0j9d/h?rlke
 DOWNLOAD_URL_LTU="https://www.dropbox.com/scl/fo/wzw72e9e88x6nfd94zwi7/h?rlkey=9izvxo6eegww5qfkukz2bhdch&dl=1"
 DOWNLOAD_URL_LTUAS="https://www.dropbox.com/scl/fo/254wkiknythx5vlenic3j/h?rlkey=zzneclei6tmagbxhqlewkj7l3&dl=1"
 
-# Function to check and create directory
-check_and_create_dir() {
-    if [ ! -d "$1" ]; then
-        echo "Directory $1 does not exist. Creating now."
-        mkdir -p "$1"
-        echo "Directory $1 created."
+# # Function to check and create directory
+# check_and_create_dir() {
+#     if [ ! -d "$1" ]; then
+#         echo "Directory $1 does not exist. Creating now."
+#         mkdir -p "$1"
+#         echo "Directory $1 created."
 
-        # Download and unzip based on directory
-        case "$1" in
-            "$DIR2")
-                echo "Downloading vicuna ZIP file..."
-                TEMP_ZIP="${1}/vicuna.zip"
-                wget -O "$TEMP_ZIP" "$DOWNLOAD_URL_VICUNA"
-                ;;
-            "$DIR3")
-                echo "Downloading vicuna_ltu ZIP file..."
-                TEMP_ZIP="${1}/vicuna_ltu.zip"
-                wget -O "$TEMP_ZIP" "$DOWNLOAD_URL_LTU"
-                ;;
-            "$DIR4")
-                echo "Downloading vicuna_ltuas ZIP file..."
-                TEMP_ZIP="${1}/vicuna_ltuas.zip"
-                wget -O "$TEMP_ZIP" "$DOWNLOAD_URL_LTUAS"
-                ;;
-        esac
+#         # Download and unzip based on directory
+#         case "$1" in
+#             "$DIR2")
+#                 echo "Downloading vicuna ZIP file..."
+#                 TEMP_ZIP="${1}/vicuna.zip"
+#                 wget --no-check-certificate -O "$TEMP_ZIP" "$DOWNLOAD_URL_VICUNA"
+#                 ;;
+#             "$DIR3")
+#                 echo "Downloading vicuna_ltu ZIP file..."
+#                 TEMP_ZIP="${1}/vicuna_ltu.zip"
+#                 wget --no-check-certificate -O "$TEMP_ZIP" "$DOWNLOAD_URL_LTU"
+#                 ;;
+#             "$DIR4")
+#                 echo "Downloading vicuna_ltuas ZIP file..."
+#                 TEMP_ZIP="${1}/vicuna_ltuas.zip"
+#                 wget --no-check-certificate -O "$TEMP_ZIP" "$DOWNLOAD_URL_LTUAS"
+#                 ;;
+#         esac
 
-        if [[ ! -z "$TEMP_ZIP" ]]; then
-            echo "Download complete. Unzipping..."
-            unzip "$TEMP_ZIP" -d "$1"
-            rm "$TEMP_ZIP"
-            echo "Unzip complete."
-        fi
-    else
-        echo "Directory $1 already exists."
-    fi
-}
+#         if [[ ! -z "$TEMP_ZIP" ]]; then
+#             echo "Download complete. Unzipping..."
+#             unzip "$TEMP_ZIP" -d "$1"
+#             rm "$TEMP_ZIP"
+#             echo "Unzip complete."
+#         fi
+#     else
+#         echo "Directory $1 already exists."
+#     fi
+# }
 
-# Check and create directories
-check_and_create_dir "$DIR1"
-check_and_create_dir "$DIR2"
-check_and_create_dir "$DIR3"
-check_and_create_dir "$DIR4"
+# # Check and create directories
+# check_and_create_dir "$DIR1"
+# check_and_create_dir "$DIR2"
+# check_and_create_dir "$DIR3"
+# check_and_create_dir "$DIR4"
 
 create_symlink() {
     if [ ! -L "$2" ]; then
@@ -91,7 +91,7 @@ if [ -f "$TARGET_FILE" ]; then
 else
     mkdir -p "$TARGET_DIR"
 
-    wget -O "$TARGET_FILE" "$DOWNLOAD_URL"
+    wget --no-check-certificate -O "$TARGET_FILE" "$DOWNLOAD_URL"
     echo "Download complete. File saved to $TARGET_FILE"
 fi
 
@@ -105,18 +105,20 @@ if [ -f "$TARGET_FILE" ]; then
 else
     mkdir -p "$TARGET_DIR"
 
-    wget -O "$TARGET_FILE" "$DOWNLOAD_URL"
+    wget --no-check-certificate -O "$TARGET_FILE" "$DOWNLOAD_URL"
     echo "Download complete. File saved to $TARGET_FILE"
 fi
 
-mkdir -p ../../eval_data/
-FILE_URL="https://www.dropbox.com/scl/fo/juh1dk9ltvhghuj0l1sag/h?rlkey=0n2cd5kebzh8slwanjzrfn7q6&dl=1"
-wget -O download.zip "$FILE_URL"
-unzip -n download.zip -d ../../eval_data/  # -n option to not overwrite existing files
-rm download.zip
-FILE_URL="https://www.dropbox.com/scl/fo/o91k6cnwqft84tgmuotwg/h?rlkey=6bnjobvrbqbt4rqt3f1tgaeb8&dl=1"
-wget -O download.zip "$FILE_URL"
-unzip -n download.zip -d ../../eval_data/  # -n option to not overwrite existing files
-rm download.zip
+# mkdir -p ../../eval_data/
+# FILE_URL="https://www.dropbox.com/scl/fo/juh1dk9ltvhghuj0l1sag/h?rlkey=0n2cd5kebzh8slwanjzrfn7q6&dl=1"
+# curl -L -k -o download.zip --connect-timeout 60 --max-time 600 "$FILE_URL"
+# # wget --no-check-certificate -O download.zip "$FILE_URL"
+# unzip -n download.zip -d ../../eval_data/  # -n option to not overwrite existing files
+# rm download.zip
+# FILE_URL="https://www.dropbox.com/scl/fo/o91k6cnwqft84tgmuotwg/h?rlkey=6bnjobvrbqbt4rqt3f1tgaeb8&dl=1"
+# curl -L -k -o download.zip "$FILE_URL"
+# # wget --no-check-certificate -O download.zip "$FILE_URL"
+# unzip -n download.zip -d ../../eval_data/  # -n option to not overwrite existing files
+# rm download.zip
 
 python inference_gradio.py

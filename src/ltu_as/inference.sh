@@ -23,17 +23,17 @@ check_and_create_dir() {
             "$DIR2")
                 echo "Downloading vicuna ZIP file..."
                 TEMP_ZIP="${1}/vicuna.zip"
-                wget -O "$TEMP_ZIP" "$DOWNLOAD_URL_VICUNA"
+                wget --no-check-certificate -O "$TEMP_ZIP" "$DOWNLOAD_URL_VICUNA"
                 ;;
             "$DIR3")
                 echo "Downloading vicuna_ltu ZIP file..."
                 TEMP_ZIP="${1}/vicuna_ltu.zip"
-                wget -O "$TEMP_ZIP" "$DOWNLOAD_URL_LTU"
+                wget --no-check-certificate -O "$TEMP_ZIP" "$DOWNLOAD_URL_LTU"
                 ;;
             "$DIR4")
                 echo "Downloading vicuna_ltuas ZIP file..."
                 TEMP_ZIP="${1}/vicuna_ltuas.zip"
-                wget -O "$TEMP_ZIP" "$DOWNLOAD_URL_LTUAS"
+                wget --no-check-certificate -O "$TEMP_ZIP" "$DOWNLOAD_URL_LTUAS"
                 ;;
         esac
 
@@ -91,7 +91,7 @@ if [ -f "$TARGET_FILE" ]; then
 else
     mkdir -p "$TARGET_DIR"
 
-    wget -O "$TARGET_FILE" "$DOWNLOAD_URL"
+    wget --no-check-certificate -O "$TARGET_FILE" "$DOWNLOAD_URL"
     echo "Download complete. File saved to $TARGET_FILE"
 fi
 
@@ -105,25 +105,25 @@ if [ -f "$TARGET_FILE" ]; then
 else
     mkdir -p "$TARGET_DIR"
 
-    wget -O "$TARGET_FILE" "$DOWNLOAD_URL"
+    wget --no-check-certificate -O "$TARGET_FILE" "$DOWNLOAD_URL"
     echo "Download complete. File saved to $TARGET_FILE"
 fi
 
 mkdir -p ../../eval_data/
 
 FILE_URL="https://www.dropbox.com/scl/fo/juh1dk9ltvhghuj0l1sag/h?rlkey=0n2cd5kebzh8slwanjzrfn7q6&dl=1"
-wget -O download.zip "$FILE_URL"
+wget --no-check-certificate -O download.zip "$FILE_URL"
 unzip -n download.zip -d ../../eval_data/  # -n option to not overwrite existing files
 rm download.zip
 FILE_URL="https://www.dropbox.com/scl/fo/o91k6cnwqft84tgmuotwg/h?rlkey=6bnjobvrbqbt4rqt3f1tgaeb8&dl=1"
-wget -O download.zip "$FILE_URL"
+wget --no-check-certificate -O download.zip "$FILE_URL"
 unzip -n download.zip -d ../../eval_data/  # -n option to not overwrite existing files
 rm download.zip
 
 DEST_FILE="../../pretrained_mdls/large-v1.pt"
 
 if [ ! -f "$DEST_FILE" ]; then
-    wget -O "$DEST_FILE" "https://www.dropbox.com/scl/fi/r7sfa5y2kh7nc8lpmdv9a/large-v1.pt?rlkey=ffc8abmxjy69vxairb336mkhq&dl=1"
+    wget --no-check-certificate -O "$DEST_FILE" "https://www.dropbox.com/scl/fi/r7sfa5y2kh7nc8lpmdv9a/large-v1.pt?rlkey=ffc8abmxjy69vxairb336mkhq&dl=1"
 else
     echo "File already exists: $DEST_FILE"
 fi
